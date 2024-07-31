@@ -1,9 +1,12 @@
 <script>
+import Home from './pages/Home.vue';
+
 export default {
     name: 'App',
+    components: { Home },
 }
 </script>
 
 <template>
-    <h1>Proyecto DV Social</h1>
+    <Home />
 </template>
