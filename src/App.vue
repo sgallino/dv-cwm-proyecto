@@ -1,20 +1,17 @@
 <script>
-import Home from './pages/Home.vue';
+import AppNavbar from './components/AppNavbar.vue';
+import AppFooter from './components/AppFooter.vue';
 
 export default {
     name: 'App',
-    components: { Home },
+    components: { AppNavbar, AppFooter },
 }
 </script>
 
 <template>
-    <nav>
-        <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/chat">Chat</router-link></li>
-            <li><router-link to="/registro">Registro</router-link></li>
-            <li><router-link to="/iniciar-sesion">Iniciar Sesión</router-link></li>
-        </ul>
-    </nav>
-    <router-view />
+    <AppNavbar />
+    <main id="main">
+        <router-view />
+    </main>
+    <AppFooter />
 </template>
