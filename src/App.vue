@@ -10,7 +10,7 @@ export default {
 
 <template>
     <AppNavbar />
-    <main id="main">
+    <main class="main">
         <router-view />
     </main>
     <AppFooter />
