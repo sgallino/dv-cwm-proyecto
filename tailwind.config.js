@@ -5,7 +5,14 @@ export default {
         "./src/**/*.{js,ts,jsx,tsx,vue}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            height: {
+                25: '6.25rem',
+            },
+            gridTemplateRows: {
+                'layout': '60px 1fr 100px'
+            }
+        },
     },
     plugins: [],
 }

@@ -5,5 +5,5 @@ export default {
 </script>
 
 <template>
-    <h1>Chat Global</h1>
+    <h1 class="text-3xl">Chat Global</h1>
 </template>

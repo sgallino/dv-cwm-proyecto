@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-    <footer class="footer">
+    <footer class="flex justify-center items-center h-25 bg-gray-800 text-white">
         <p>Copyright &copy; Da Vinci 2024</p>
     </footer>
 </template>

@@ -5,21 +5,41 @@ export default {
 </script>
 
 <template>
-    <nav class="navbar">
-        <p class="navbar-brand">DV Social</p>
+    <nav class="flex justify-between items-center h-15 pr-4 bg-gray-100">
+        <p class="p-4 text-xl">DV Social</p>
 
-        <ul class="navbar-list">
-            <li class="navbar-list-item">
-                <router-link to="/" class="navbar-link">Home</router-link>
+        <ul class="flex gap-2">
+            <li>
+                <router-link
+                    to="/" 
+                    class="block p-3 no-underline text-gray-600"
+                >
+                    Home
+                </router-link>
             </li>
-            <li class="navbar-list-item">
-                <router-link to="/chat" class="navbar-link">Chat</router-link>
+            <li>
+                <router-link
+                    to="/chat" 
+                    class="block p-3 no-underline text-gray-600"
+                >
+                    Chat
+                </router-link>
             </li>
-            <li class="navbar-list-item">
-                <router-link to="/registro" class="navbar-link">Registro</router-link>
+            <li>
+                <router-link
+                    to="/registro" 
+                    class="block p-3 no-underline text-gray-600"
+                >
+                    Registro
+                </router-link>
             </li>
-            <li class="navbar-list-item">
-                <router-link to="/iniciar-sesion" class="navbar-link">Iniciar Sesión</router-link>
+            <li>
+                <router-link
+                    to="/iniciar-sesion" 
+                    class="block p-3 no-underline text-gray-600"
+                >
+                    Iniciar Sesión
+                </router-link>
             </li>
         </ul>
     </nav>

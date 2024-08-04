@@ -5,5 +5,5 @@ export default {
 </script>
 
 <template>
-    <h1>Crear una Cuenta</h1>
+    <h1 class="text-3xl">Crear una Cuenta</h1>
 </template>
