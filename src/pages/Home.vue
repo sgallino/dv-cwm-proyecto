@@ -1,9 +1,12 @@
 <script>
+import BaseHeading1 from '../components/BaseHeading1.vue';
+
 export default {
     name: 'Home',
+    components: { BaseHeading1 },
 }
 </script>
 
 <template>
-    <h1 class="text-3xl">Página Principal de DV Social</h1>
+    <BaseHeading1 class="text-3xl">Página Principal de DV Social</BaseHeading1>
 </template>

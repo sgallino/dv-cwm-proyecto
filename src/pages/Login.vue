@@ -1,9 +1,12 @@
 <script>
+import BaseHeading1 from '../components/BaseHeading1.vue';
+
 export default {
     name: 'Login',
+    components: { BaseHeading1 },
 }
 </script>
 
 <template>
-    <h1 class="text-3xl">Iniciar Sesión</h1>
+    <BaseHeading1 class="text-3xl">Iniciar Sesión</BaseHeading1>
 </template>
