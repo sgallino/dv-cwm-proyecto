@@ -19,7 +19,22 @@ export default {
                     email: 'sara@za.com',
                     content: 'Todo bien Pepe. ¿Y vos?',
                 },
-            ]
+            ],
+
+            newMessage: {
+                email: '',
+                content: '',
+            },
+        }
+    },
+
+    methods: {
+        sendMessage() {
+            this.messages.push({
+                email: this.newMessage.email,
+                content: this.newMessage.content,
+            });
+            this.newMessage.content = "";
         }
     }
 }
@@ -47,6 +62,7 @@ export default {
 
             <form 
                 action="#"
+                @submit.prevent="sendMessage"
             >
                 <div class="mb-4">
                     <label for="user" class="block mb-2">Nombre de Usuario</label>
@@ -54,6 +70,7 @@ export default {
                         type="text"
                         id="user"
                         class="w-full border rounded py-2 px-4"
+                        v-model="newMessage.email"
                     >
                 </div>
                 <div class="mb-4">
@@ -62,6 +79,7 @@ export default {
                         type="text"
                         id="text"
                         class="w-full border rounded py-2 px-4"
+                        v-model="newMessage.content"
                     ></textarea>
                 </div>
                 <button
