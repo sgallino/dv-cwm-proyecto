@@ -8,5 +8,5 @@ export default {
 </script>
 
 <template>
-    <BaseHeading1 class="text-3xl">Página Principal de DV Social</BaseHeading1>
+    <BaseHeading1>Página Principal de DV Social</BaseHeading1>
 </template>

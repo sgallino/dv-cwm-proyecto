@@ -8,5 +8,5 @@ export default {
 </script>
 
 <template>
-    <BaseHeading1 class="text-3xl">Iniciar Sesión</BaseHeading1>
+    <BaseHeading1>Iniciar Sesión</BaseHeading1>
 </template>

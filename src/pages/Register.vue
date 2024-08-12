@@ -8,5 +8,5 @@ export default {
 </script>
 
 <template>
-    <BaseHeading1 class="text-3xl">Crear una Cuenta</BaseHeading1>
+    <BaseHeading1>Crear una Cuenta</BaseHeading1>
 </template>
