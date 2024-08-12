@@ -4,6 +4,24 @@ import BaseHeading1 from '../components/BaseHeading1.vue';
 export default {
     name: 'Chat',
     components: { BaseHeading1 },
+    data() {
+        return {
+            messages: [
+                {
+                    email: 'sara@za.com',
+                    content: '¡Hola!',
+                },
+                {
+                    email: 'pepe@trueno.com',
+                    content: 'hola sara q tal??',
+                },
+                {
+                    email: 'sara@za.com',
+                    content: 'Todo bien Pepe. ¿Y vos?',
+                },
+            ]
+        }
+    }
 }
 </script>
 
@@ -15,7 +33,13 @@ export default {
             <h2 class="sr-only">Lista de mensajes</h2>
 
             <div class="min-h-[400px] p-4 border rounded">
-                <!-- Acá van a ir los mensajes -->
+                <div 
+                    v-for="message in messages"
+                    class="mb-4"
+                >
+                    <div class="text-sm"><b>{{ message.email }} dijo:</b></div>
+                    <div>{{ message.content }}</div>
+                </div>
             </div>
         </section>
         <section class="w-3/12">
