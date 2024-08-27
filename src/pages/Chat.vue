@@ -1,6 +1,6 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
-import ChatSection from '../components/ChatSection.vue';
+import ChatSection from '../components/chat/ChatSection.vue';
 
 export default {
     name: 'Chat',
