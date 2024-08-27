@@ -2,7 +2,7 @@
 import ChatMessageList from './ChatMessageList.vue';
 import ChatMessageForm from './ChatMessageForm.vue';
 import { db } from '../../services/firebase';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
 
 export default {
     name: 'ChatSection',
@@ -18,6 +18,7 @@ export default {
             const chatRef = collection(db, 'chat');
             addDoc(chatRef, {
                 ...newMessage,
+                created_at: serverTimestamp(),
             });
         }
     },
