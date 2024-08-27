@@ -1,6 +1,8 @@
 <script>
 import ChatMessageList from './ChatMessageList.vue';
 import ChatMessageForm from './ChatMessageForm.vue';
+import { db } from '../../services/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 export default {
     name: 'ChatSection',
@@ -25,10 +27,10 @@ export default {
     },
 
     methods: {
-        sendMessage(newMessage) {
-            this.messages.push({
-                email: newMessage.email,
-                content: newMessage.content,
+        async sendMessage(newMessage) {
+            const chatRef = collection(db, 'chat');
+            addDoc(chatRef, {
+                ...newMessage,
             });
         }
     }
