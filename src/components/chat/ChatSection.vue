@@ -2,7 +2,7 @@
 import ChatMessageList from './ChatMessageList.vue';
 import ChatMessageForm from './ChatMessageForm.vue';
 import { db } from '../../services/firebase';
-import { collection, addDoc, getDocs, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from 'firebase/firestore';
 
 export default {
     name: 'ChatSection',
@@ -26,12 +26,13 @@ export default {
     async mounted() {
         const chatRef = collection(db, 'chat');
         const q = query(chatRef, orderBy('created_at'));
-        const snapshot = await getDocs(q);
-        this.messages = snapshot.docs.map(doc => {
-            return {
-                ...doc.data(),
-            }
-        })
+        onSnapshot(q, (snapshot) => {
+            this.messages = snapshot.docs.map(doc => {
+                return {
+                    ...doc.data(),
+                }
+            });
+        });
     },
 }
 </script>
