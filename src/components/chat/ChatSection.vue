@@ -1,8 +1,7 @@
 <script>
 import ChatMessageList from './ChatMessageList.vue';
 import ChatMessageForm from './ChatMessageForm.vue';
-import { db } from '../../services/firebase';
-import { collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { chatSaveMessage, chatSubscribeToMessages } from '../../services/chat';
 
 export default {
     name: 'ChatSection',
@@ -15,24 +14,12 @@ export default {
 
     methods: {
         async sendMessage(newMessage) {
-            const chatRef = collection(db, 'chat');
-            addDoc(chatRef, {
-                ...newMessage,
-                created_at: serverTimestamp(),
-            });
+            chatSaveMessage({...newMessage});
         }
     },
 
     async mounted() {
-        const chatRef = collection(db, 'chat');
-        const q = query(chatRef, orderBy('created_at'));
-        onSnapshot(q, (snapshot) => {
-            this.messages = snapshot.docs.map(doc => {
-                return {
-                    ...doc.data(),
-                }
-            });
-        });
+        chatSubscribeToMessages(updatedMessages => this.messages = updatedMessages);
     },
 }
 </script>
