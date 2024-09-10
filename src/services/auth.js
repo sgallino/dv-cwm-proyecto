@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 
 let loggedUser = {
@@ -26,6 +26,16 @@ onAuthStateChanged(auth, user => {
 export async function login({email, password}) {
     try {
         await signInWithEmailAndPassword(auth, email, password);
+        return true;
+    } catch (error) {
+        console.error("[auth.js] Error al autenticar: ", error);
+        throw error;
+    }
+}
+
+export async function register({email, password}) {
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
         return true;
     } catch (error) {
         console.error("[auth.js] Error al autenticar: ", error);
