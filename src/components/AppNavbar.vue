@@ -1,6 +1,26 @@
 <script>
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../services/firebase';
+import { subscribeToAuth } from '../services/auth';
+
 export default {
     name: 'AppNavbar',
+    data() {
+        return {
+            loggedUser: {
+                id: null,
+                email: null,
+            },
+        }
+    },
+    methods: {
+        handleLogout() {
+            signOut(auth);
+        }
+    },
+    mounted() {
+        subscribeToAuth(newUserData => this.loggedUser = newUserData);
+    }
 }
 </script>
 
@@ -17,6 +37,7 @@ export default {
                     Home
                 </router-link>
             </li>
+            <template v-if="loggedUser.id !== null">
             <li>
                 <router-link
                     to="/chat" 
@@ -25,22 +46,45 @@ export default {
                     Chat
                 </router-link>
             </li>
-            <li>
-                <router-link
-                    to="/registro" 
-                    class="block p-3 no-underline text-gray-600"
-                >
-                    Registro
-                </router-link>
-            </li>
-            <li>
-                <router-link
-                    to="/iniciar-sesion" 
-                    class="block p-3 no-underline text-gray-600"
-                >
-                    Iniciar Sesión
-                </router-link>
-            </li>
+                <li>
+                    <router-link
+                        to="/registro" 
+                        class="block p-3 no-underline text-gray-600"
+                    >
+                        Mi Perfil
+                    </router-link>
+                </li>
+                <li>
+                    <form
+                        action="#"
+                        @submit.prevent="handleLogout"
+                    >
+                        <button 
+                            type="submit"
+                            class="block p-3 no-underline text-gray-600"
+                        >{{ loggedUser.email }} (Cerrar Sesión)</button>
+                    </form>
+                </li>
+            </template>
+            <template v-else>
+                <li>
+
+                    <router-link
+                        to="/registro" 
+                        class="block p-3 no-underline text-gray-600"
+                    >
+                        Registro
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        to="/iniciar-sesion" 
+                        class="block p-3 no-underline text-gray-600"
+                    >
+                        Iniciar Sesión
+                    </router-link>
+                </li>
+            </template>
         </ul>
     </nav>
 </template>
