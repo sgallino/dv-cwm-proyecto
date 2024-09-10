@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 
 let loggedUser = {
@@ -31,6 +31,10 @@ export async function login({email, password}) {
         console.error("[auth.js] Error al autenticar: ", error);
         throw error;
     }
+}
+
+export function logout() {
+    return signOut(auth);
 }
 
 export function subscribeToAuth(callback) {

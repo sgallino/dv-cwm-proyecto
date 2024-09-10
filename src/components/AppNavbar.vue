@@ -1,7 +1,5 @@
 <script>
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../services/firebase';
-import { subscribeToAuth } from '../services/auth';
+import { logout, subscribeToAuth } from '../services/auth';
 
 export default {
     name: 'AppNavbar',
@@ -15,7 +13,7 @@ export default {
     },
     methods: {
         handleLogout() {
-            signOut(auth);
+            logout();
         }
     },
     mounted() {
