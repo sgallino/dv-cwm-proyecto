@@ -6,6 +6,8 @@ let loggedUser = {
     email: null,
 }
 
+let observers = [];
+
 onAuthStateChanged(auth, user => {
     if(user) {
         loggedUser = {
@@ -18,6 +20,7 @@ onAuthStateChanged(auth, user => {
             email: null,
         }
     }
+    notifyAll();
 });
 
 export async function login({email, password}) {
@@ -28,4 +31,18 @@ export async function login({email, password}) {
         console.error("[auth.js] Error al autenticar: ", error);
         throw error;
     }
+}
+
+export function subscribeToAuth(callback) {
+    observers.push(callback);
+
+    notify(callback);
+}
+
+function notify(callback) {
+    callback({...loggedUser});
+}
+
+function notifyAll() {
+    observers.forEach(callback => notify(callback));
 }
