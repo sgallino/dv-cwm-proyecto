@@ -37,17 +37,17 @@ export default {
                 </router-link>
             </li>
             <template v-if="loggedUser.id !== null">
-            <li>
-                <router-link
-                    to="/chat" 
-                    class="block p-3 no-underline text-gray-600"
-                >
-                    Chat
-                </router-link>
-            </li>
                 <li>
                     <router-link
-                        to="/registro" 
+                        to="/chat" 
+                        class="block p-3 no-underline text-gray-600"
+                    >
+                        Chat
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                        to="/mi-perfil" 
                         class="block p-3 no-underline text-gray-600"
                     >
                         Mi Perfil
