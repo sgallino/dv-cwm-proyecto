@@ -1,6 +1,6 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
-import { subscribeToAuth } from '../services/auth';
+import { editProfile, subscribeToAuth } from '../services/auth';
 
 export default {
     name: 'MyProfileEdit',
@@ -18,12 +18,19 @@ export default {
                 displayName: null,
                 bio: null,
                 career: null,
-            }
+            },
+            editing: false,
         }
     },
     methods: {
         async handleSubmit() {
-            // TODO...
+            this.editing = true;
+            try {
+                await editProfile({...this.editData});
+            } catch (error) {
+                console.error("[MyProfileEdit handleSubmit] Error al editar el perfil: ", error);
+            }
+            this.editing = false;
         }
     },
     mounted() {

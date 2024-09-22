@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "./firebase";
 
 let loggedUser = {
@@ -39,6 +39,15 @@ export async function register({email, password}) {
         return true;
     } catch (error) {
         console.error("[auth.js] Error al autenticar: ", error);
+        throw error;
+    }
+}
+
+export async function editProfile({ displayName, bio, career }) {
+    try {
+        await updateProfile(auth.currentUser, { displayName });
+    } catch (error) {
+        console.error("[auth.js editProfile] Error al editar el perfil: ", error);
         throw error;
     }
 }

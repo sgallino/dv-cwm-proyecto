@@ -23,7 +23,12 @@ export default {
 </script>
 
 <template>
-    <BaseHeading1>Mi Perfil</BaseHeading1>
+    <div class="flex gap-4 items-end">
+        <BaseHeading1>Mi Perfil</BaseHeading1>
+        <div class="mb-4">
+            <router-link class="text-blue-700 underline" to="/mi-perfil/editar">Editar mi Perfil</router-link>
+        </div>
+    </div>
 
     <div class="mb-4">
         {{ loggedUser.bio || 'Acá va tu biografía...' }}
