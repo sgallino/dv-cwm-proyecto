@@ -20,7 +20,9 @@ export default {
 
             try {
                 await login({...this.user});
-                console.log("Sesión iniciada con éxito.");
+                // console.log("Sesión iniciada con éxito.");
+
+                this.$router.push({ path: '/chat' });
             } catch (error) {
                 // TODO: Mostrar un mensaje de feedback.
                 console.error('[Login.vue] Error al autenticar: ', error);

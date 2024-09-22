@@ -14,6 +14,7 @@ export default {
     methods: {
         handleLogout() {
             logout();
+            this.$router.push({ path: '/iniciar-sesion' });
         }
     },
     mounted() {
