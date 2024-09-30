@@ -34,7 +34,14 @@ export default {
         }
     },
     mounted() {
-        subscribeToAuth(newUserData => this.loggedUser = newUserData);
+        subscribeToAuth(newUserData => {
+            this.loggedUser = newUserData;
+            this.editData = {
+                displayName: newUserData.displayName,
+                bio: newUserData.bio,
+                career: newUserData.career,
+            }
+        });
     }
 }
 </script>

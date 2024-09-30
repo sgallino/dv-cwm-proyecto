@@ -68,6 +68,15 @@ export async function editProfile({ displayName, bio, career }) {
         const promiseDb = editUserProfile(loggedUser.id, { displayName, bio, career });
 
         await Promise.all([promiseAuth, promiseDb]);
+
+        loggedUser = {
+            ...loggedUser,
+            displayName,
+            bio,
+            career,
+        }
+        
+        notifyAll();
     } catch (error) {
         console.error("[auth.js editProfile] Error al editar el perfil: ", error);
         throw error;
