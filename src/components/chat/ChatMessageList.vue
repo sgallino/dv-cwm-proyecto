@@ -26,7 +26,14 @@ export default {
         >
             <div class="text-sm"><b>{{ message.email }} dijo:</b></div>
             <div>{{ message.content }}</div>
-            <div class="text-sm text-slate-700 italic">{{ dateToString(message.created_at) }}</div>
+            <div class="text-sm text-slate-700 italic">
+                <template v-if="message.created_at">
+                    {{ dateToString(message.created_at) }}
+                </template>
+                <template v-else>
+                    Enviando...
+                </template>
+            </div>
         </div>
     </div>
 </template>
