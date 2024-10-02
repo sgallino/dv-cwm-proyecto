@@ -15,6 +15,14 @@ export async function getUserProfileById(id) {
     }
 }
 
+export async function createUserProfile(id, { email }) {
+    const userDoc = doc(db, `users/${id}`);
+
+    await setDoc(userDoc, {
+        email
+    });
+}
+
 export async function editUserProfile(id, data) {
     const userDoc = doc(db, `users/${id}`);
 

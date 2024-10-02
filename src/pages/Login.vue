@@ -50,7 +50,7 @@ export default {
             >
         </div>
         <div class="mb-4">
-            <label for="password" class="block mb-2">Contrseña</label>
+            <label for="password" class="block mb-2">Contraseña</label>
             <input
                 type="password"
                 id="password"

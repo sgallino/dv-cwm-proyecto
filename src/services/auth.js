@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "./firebase";
-import { editUserProfile, getUserProfileById } from "./user-profile";
+import { createUserProfile, editUserProfile, getUserProfileById } from "./user-profile";
 
 let loggedUser = {
     id: null,
@@ -53,7 +53,10 @@ export async function login({email, password}) {
 
 export async function register({email, password}) {
     try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const credentials = await createUserWithEmailAndPassword(auth, email, password);
+
+        await createUserProfile(credentials.user.uid, { email });
+
         return true;
     } catch (error) {
         console.error("[auth.js] Error al autenticar: ", error);
