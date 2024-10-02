@@ -2,6 +2,8 @@
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import { subscribeToAuth } from '../services/auth';
 
+let unsubscribeFromAuth = () => {}
+
 export default {
     name: 'MyProfile',
     components: { BaseHeading1 },
@@ -17,7 +19,10 @@ export default {
         }
     },
     mounted() {
-        subscribeToAuth(newUserData => this.loggedUser = newUserData);
+        unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser = newUserData);
+    },
+    unmounted() {
+        unsubscribeFromAuth();
     }
 }
 </script>

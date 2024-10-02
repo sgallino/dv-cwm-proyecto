@@ -2,6 +2,8 @@
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import { editProfile, subscribeToAuth } from '../services/auth';
 
+let unsubscribeFromAuth = () => {}
+
 export default {
     name: 'MyProfileEdit',
     components: { BaseHeading1 },
@@ -34,7 +36,7 @@ export default {
         }
     },
     mounted() {
-        subscribeToAuth(newUserData => {
+        unsubscribeFromAuth = subscribeToAuth(newUserData => {
             this.loggedUser = newUserData;
             this.editData = {
                 displayName: newUserData.displayName,
@@ -42,6 +44,9 @@ export default {
                 career: newUserData.career,
             }
         });
+    },
+    unmounted() {
+        unsubscribeFromAuth();
     }
 }
 </script>

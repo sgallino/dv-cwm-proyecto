@@ -90,10 +90,15 @@ export function logout() {
 export function subscribeToAuth(callback) {
     observers.push(callback);
 
+    console.log('Observer agregado. El stack actual es: ', observers);
+
     notify(callback);
+
+    return () => observers = observers.filter(obs => obs !== callback);
 }
 
 function notify(callback) {
+    console.log('Notificando a un observer...');
     callback({...loggedUser});
 }
 
