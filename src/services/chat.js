@@ -17,6 +17,7 @@ export async function chatSubscribeToMessages(callback) {
             callback(snapshot.docs.map(doc => {
                 return {
                     ...doc.data(),
+                    created_at: doc.data().created_at.toDate(),
                 }
             }));
         });
