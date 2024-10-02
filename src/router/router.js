@@ -6,6 +6,7 @@ import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import MyProfile from "../pages/MyProfile.vue";
 import MyProfileEdit from "../pages/MyProfileEdit.vue";
+import UserProfile from "../pages/UserProfile.vue";
 
 const routes = [
     { path: '/',                    component: Home },
@@ -14,6 +15,7 @@ const routes = [
     { path: '/chat',                component: Chat,            meta: { requiresAuth: true } },
     { path: '/mi-perfil',           component: MyProfile,       meta: { requiresAuth: true } },
     { path: '/mi-perfil/editar',    component: MyProfileEdit,   meta: { requiresAuth: true } },
+    { path: '/usuario/:id',         component: UserProfile,     meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

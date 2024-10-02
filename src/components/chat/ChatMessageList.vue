@@ -24,7 +24,12 @@ export default {
             v-for="message in messages"
             class="mb-4"
         >
-            <div class="text-sm"><b>{{ message.email }} dijo:</b></div>
+            <div class="text-sm">
+                <router-link 
+                    :to="`/usuario/${message.user_id}`" 
+                    class="text-blue-700 underline font-bold"
+                >{{ message.email }} dijo:</router-link>
+            </div>
             <div>{{ message.content }}</div>
             <div class="text-sm text-slate-700 italic">
                 <template v-if="message.created_at">
