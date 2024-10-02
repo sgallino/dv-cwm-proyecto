@@ -1,4 +1,8 @@
 <script>
+import { subscribeToAuth } from '../../services/auth';
+
+let unsubscribeFromAuth = () => {};
+
 export default {
     name: 'ChatMessageForm',
     emits: {
@@ -9,17 +13,33 @@ export default {
     data() {
         return {
             newMessage: {
-                email: '',
                 content: '',
+            },
+            loggedUser: {
+                id: null,
+                email: null,
+                displayName: null,
+                bio: null,
+                career: null,
             }
         }
     },
 
     methods: {
         handleSubmit() {
-            this.$emit('newMessage', {...this.newMessage});
+            this.$emit('newMessage', {
+                user_id: this.loggedUser.id,
+                email: this.loggedUser.email,
+                content: this.newMessage.content,
+            });
             this.newMessage.content = '';
         }
+    },
+    mounted() {
+        unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser = newUserData);
+    },
+    unmounted() {
+        unsubscribeFromAuth();
     }
 }
 </script>
@@ -30,13 +50,8 @@ export default {
         @submit.prevent="handleSubmit"
     >
         <div class="mb-4">
-            <label for="user" class="block mb-2">Nombre de Usuario</label>
-            <input
-                type="text"
-                id="user"
-                class="w-full border rounded py-2 px-4"
-                v-model="newMessage.email"
-            >
+            <span class="block mb-2">Nombre de Usuario</span>
+            {{ loggedUser.email }}
         </div>
         <div class="mb-4">
             <label for="text" class="block mb-2">Mensaje</label>

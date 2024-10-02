@@ -1,9 +1,10 @@
 import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { db } from "./firebase";
 
-export async function chatSaveMessage({email, content}) {
+export async function chatSaveMessage({user_id, email, content}) {
     const chatRef = collection(db, 'chat');
     return addDoc(chatRef, {
+        user_id: user_id,
         email: email,
         content: content,
         created_at: serverTimestamp(),
