@@ -13,6 +13,7 @@ export default {
                 id: null,
                 email: null,
                 displayName: null,
+                photoURL: null,
                 bio: null,
                 career: null,
             }
@@ -40,16 +41,28 @@ export default {
         </div>
     </div>
 
-    <div class="mb-4">
-        {{ loggedUser.bio || 'Acá va tu biografía...' }}
-    </div>
+    <div class="flex gap-4">
+        <div class="w-1/6">
+            <img
+                v-if="loggedUser.photoURL"
+                :src="loggedUser.photoURL"
+                alt=""
+            >
+            <p v-else>Sin imagen</p>
+        </div>
+        <div>
+            <div class="mb-4">
+                {{ loggedUser.bio || 'Acá va tu biografía...' }}
+            </div>
 
-    <dl class="mb-4">
-        <dt class="font-bold">Email</dt>
-        <dd class="mb-2">{{ loggedUser.email }}</dd>
-        <dt class="font-bold">Nombre</dt>
-        <dd class="mb-2">{{ loggedUser.displayName || 'No especificado' }}</dd>
-        <dt class="font-bold">Carrera</dt>
-        <dd class="mb-2">{{ loggedUser.career || 'No especificado' }}</dd>
-    </dl>
+            <dl class="mb-4">
+                <dt class="font-bold">Email</dt>
+                <dd class="mb-2">{{ loggedUser.email }}</dd>
+                <dt class="font-bold">Nombre</dt>
+                <dd class="mb-2">{{ loggedUser.displayName || 'No especificado' }}</dd>
+                <dt class="font-bold">Carrera</dt>
+                <dd class="mb-2">{{ loggedUser.career || 'No especificado' }}</dd>
+            </dl>
+        </div>
+    </div>
 </template>

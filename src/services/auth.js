@@ -7,6 +7,7 @@ let loggedUser = {
     id: null,
     email: null,
     displayName: null,
+    photoURL: null,
     bio: null,
     career: null,
     fullProfileLoaded: false,
@@ -20,6 +21,7 @@ onAuthStateChanged(auth, async user => {
             id: user.uid,
             email: user.email,
             displayName: user.displayName,
+            photoURL: user.photoURL,
         }
 
         const userProfile = await getUserProfileById(user.uid);
@@ -35,6 +37,7 @@ onAuthStateChanged(auth, async user => {
             id: null,
             email: null,
             displayName: null,
+            photoURL: null,
             bio: null,
             career: null,
         }
