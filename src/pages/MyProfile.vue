@@ -33,6 +33,11 @@ export default {
         <div class="mb-4">
             <router-link class="text-blue-700 underline" to="/mi-perfil/editar">Editar mi Perfil</router-link>
         </div>
+        <div class="mb-4">
+            <router-link class="text-blue-700 underline" to="/mi-perfil/editar/foto">
+                Editar mi Foto de Perfil
+            </router-link>
+        </div>
     </div>
 
     <div class="mb-4">
