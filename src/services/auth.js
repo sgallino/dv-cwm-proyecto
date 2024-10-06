@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "./firebase";
 import { createUserProfile, editUserProfile, getUserProfileById } from "./user-profile";
+import { getFileURL, uploadFile } from "./storage";
 
 let loggedUser = {
     id: null,
@@ -82,6 +83,27 @@ export async function editProfile({ displayName, bio, career }) {
         notifyAll();
     } catch (error) {
         console.error("[auth.js editProfile] Error al editar el perfil: ", error);
+        throw error;
+    }
+}
+
+export async function editProfileAvatar(photo) {
+    try {
+        const filepath = `users/${loggedUser.id}/avatar.jpg`; // TODO: Soportar otros formatos.
+
+        await uploadFile(filepath, photo);
+
+        const photoURL = await getFileURL(filepath);
+
+        const promiseAuth = updateProfile(auth.currentUser, { photoURL });
+        const promiseStorage = editUserProfile(loggedUser.id, { photoURL });
+
+        await Promise.all([promiseAuth, promiseStorage]);
+
+        loggedUser.photoURL = photoURL;
+        notifyAll();
+    } catch (error) {
+        console.error("[auth.js editProfileAvatar] Error al editar la imagen  del perfil: ", error);
         throw error;
     }
 }

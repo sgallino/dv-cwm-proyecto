@@ -1,5 +1,7 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
+import { editProfileAvatar } from '../services/auth';
+import { uploadFile } from '../services/storage';
 
 export default {
     name: 'MyProfileEditAvatar',
@@ -14,8 +16,16 @@ export default {
         }
     },
     methods: {
-        handleSubmit() {
+        async handleSubmit() {
+            this.editing = true;
 
+            try {
+                await editProfileAvatar(this.image);
+            } catch (error) {
+                
+            }
+
+            this.editing = false;
         },
 
         handleFileSelection(ev) {
