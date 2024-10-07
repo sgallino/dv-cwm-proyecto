@@ -1,4 +1,5 @@
 <script>
+import { readonly } from 'vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import { editProfileAvatar } from '../services/auth';
 import { uploadFile } from '../services/storage';
@@ -17,6 +18,8 @@ export default {
     },
     methods: {
         async handleSubmit() {
+            if(this.editing) return;
+
             this.editing = true;
 
             try {
@@ -29,6 +32,8 @@ export default {
         },
 
         handleFileSelection(ev) {
+            if(this.editing) return;
+
             this.image = ev.target.files[0];
 
             const reader = new FileReader;
@@ -58,13 +63,17 @@ export default {
                     type="file"
                     id="image"
                     class="w-full border rounded py-2 px-4"
+                    :class="{'bg-gray-200': editing}"
+                    :aria-readonly="editing"
                     @change="handleFileSelection"
                 >
             </div>
             <button
                 type="submit"
                 class="py-2 px-4 rounded bg-blue-500 text-white"
-            >Actualizar mi Foto</button>
+            >
+                {{ !editing ? 'Actualizar mi Foto' : 'Actualizando...' }}
+            </button>
         </form>
         <div class="w-1/2">
             <h2 class="mb-4">Previsualización:</h2>

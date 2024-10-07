@@ -44,11 +44,9 @@ export default {
     <div class="flex gap-4">
         <div class="w-1/6">
             <img
-                v-if="loggedUser.photoURL"
-                :src="loggedUser.photoURL"
+                :src="loggedUser.photoURL || '/imgs/no-image.jpg'"
                 alt=""
             >
-            <p v-else>Sin imagen</p>
         </div>
         <div>
             <div class="mb-4">
