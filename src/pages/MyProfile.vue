@@ -1,12 +1,13 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
+import ProfileInfo from '../components/profile/ProfileInfo.vue';
 import { subscribeToAuth } from '../services/auth';
 
 let unsubscribeFromAuth = () => {}
 
 export default {
     name: 'MyProfile',
-    components: { BaseHeading1 },
+    components: { BaseHeading1, ProfileInfo },
     data() {
         return {
             loggedUser: {
@@ -41,26 +42,5 @@ export default {
         </div>
     </div>
 
-    <div class="flex gap-4">
-        <div class="w-1/6">
-            <img
-                :src="loggedUser.photoURL || '/imgs/no-image.jpg'"
-                alt=""
-            >
-        </div>
-        <div>
-            <div class="mb-4">
-                {{ loggedUser.bio || 'Acá va tu biografía...' }}
-            </div>
-
-            <dl class="mb-4">
-                <dt class="font-bold">Email</dt>
-                <dd class="mb-2">{{ loggedUser.email }}</dd>
-                <dt class="font-bold">Nombre</dt>
-                <dd class="mb-2">{{ loggedUser.displayName || 'No especificado' }}</dd>
-                <dt class="font-bold">Carrera</dt>
-                <dd class="mb-2">{{ loggedUser.career || 'No especificado' }}</dd>
-            </dl>
-        </div>
-    </div>
+    <ProfileInfo :user="loggedUser" />
 </template>

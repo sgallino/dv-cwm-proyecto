@@ -10,6 +10,7 @@ export async function getUserProfileById(id) {
         id: user.id,
         email: user.data().email,
         displayName: user.data().displayName,
+        photoURL: user.data().photoURL,
         bio: user.data().bio,
         career: user.data().career,
     }

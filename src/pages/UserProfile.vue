@@ -1,11 +1,12 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import BaseLoader from '../components/BaseLoader.vue';
+import ProfileInfo from '../components/profile/ProfileInfo.vue';
 import { getUserProfileById } from '../services/user-profile';
 
 export default {
     name: 'UserProfile',
-    components: { BaseHeading1, BaseLoader },
+    components: { BaseHeading1, BaseLoader, ProfileInfo },
     data() {
         return {
             user: {
@@ -40,17 +41,6 @@ export default {
     <template v-else>
         <BaseHeading1>Perfil de {{ user.email }}</BaseHeading1>
 
-        <div class="mb-4">
-            {{ user.bio || 'Acá va tu biografía...' }}
-        </div>
-
-        <dl class="mb-4">
-            <dt class="font-bold">Email</dt>
-            <dd class="mb-2">{{ user.email }}</dd>
-            <dt class="font-bold">Nombre</dt>
-            <dd class="mb-2">{{ user.displayName || 'No especificado' }}</dd>
-            <dt class="font-bold">Carrera</dt>
-            <dd class="mb-2">{{ user.career || 'No especificado' }}</dd>
-        </dl>
+        <ProfileInfo :user="user" />
     </template>
 </template>

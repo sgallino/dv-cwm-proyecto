@@ -24,6 +24,8 @@ onAuthStateChanged(auth, async user => {
             photoURL: user.photoURL,
         }
 
+        notifyAll();
+
         const userProfile = await getUserProfileById(user.uid);
 
         loggedUser = {
