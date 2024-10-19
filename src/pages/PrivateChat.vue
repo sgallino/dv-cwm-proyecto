@@ -2,10 +2,11 @@
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import BaseLoader from '../components/BaseLoader.vue';
 import { subscribeToAuth } from '../services/auth';
-import { privateChatSaveMessage } from '../services/private-chat';
+import { privateChatSaveMessage, privateChatSubscribeToMessages } from '../services/private-chat';
 import { getUserProfileById } from '../services/user-profile';
 
 let unsubscribeFromAuth = () => {}
+let unsubscribeFromChat = () => {}
 
 export default {
     name: 'PrivateChat',
@@ -49,12 +50,20 @@ export default {
                     this.$route.params.id,
                     this.newMessage.content,
                 );
+                this.newMessage.content = '';
             } catch (error) {
                 // TODO
             }
 
             this.loading = false;
-        }
+        },
+        
+        dateToString(date) {
+            return Intl.DateTimeFormat('es-AR', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            }).format(date).replace(',' ,'');
+        },
     },
     mounted() {
         unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser = newUserData);
@@ -64,9 +73,22 @@ export default {
                 this.loadingUser = false;
                 this.user = profile;
             })
+        
+        this.loadingMessages = true;
+        privateChatSubscribeToMessages(
+            this.loggedUser.id,
+            this.$route.params.id,
+            newMessages => {
+                this.loadingMessages = false;
+                this.messages = newMessages;
+            }
+        ).then(unsubscribe => {
+            unsubscribeFromChat = unsubscribe;
+        })
     },
     unmounted() {
         unsubscribeFromAuth();
+        unsubscribeFromChat();
     }
 }
 </script>
