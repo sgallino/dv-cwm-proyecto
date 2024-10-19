@@ -13,38 +13,40 @@ let loggedUser = {
     fullProfileLoaded: false,
 }
 
+if(localStorage.getItem('user')) {
+    loggedUser = JSON.parse(localStorage.getItem('user'));
+}
+
 let observers = [];
 
 onAuthStateChanged(auth, async user => {
     if(user) {
-        loggedUser = {
+        updateLoggedUser({
             id: user.uid,
             email: user.email,
             displayName: user.displayName,
             photoURL: user.photoURL,
-        }
-
-        notifyAll();
+        });
 
         const userProfile = await getUserProfileById(user.uid);
 
-        loggedUser = {
+        updateLoggedUser({
             ...loggedUser,
             bio: userProfile.bio,
             career: userProfile.career,
             fullProfileLoaded: true,
-        }
+        });
     } else {
-        loggedUser = {
+        updateLoggedUser({
             id: null,
             email: null,
             displayName: null,
             photoURL: null,
             bio: null,
             career: null,
-        }
+        });
+        localStorage.removeItem('user');
     }
-    notifyAll();
 });
 
 export async function login({email, password}) {
@@ -134,4 +136,13 @@ function notify(callback) {
 
 function notifyAll() {
     observers.forEach(callback => notify(callback));
+}
+
+function updateLoggedUser(newData) {
+    loggedUser = {
+        ...loggedUser,
+        ...newData,
+    }
+    localStorage.setItem('user', JSON.stringify('user'));
+    notifyAll();
 }
