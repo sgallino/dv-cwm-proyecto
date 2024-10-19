@@ -1,15 +1,25 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, getDocs, limit, query, serverTimestamp, where } from "firebase/firestore";
 import { db } from "./firebase";
 
 async function getChatDocument(senderId, receiverId) {
+    const users = {
+        [senderId]: true,
+        [receiverId]: true,
+    };
+
     const chatsRef = collection(db, 'private-chats');
 
-    return await addDoc(chatsRef, {
-        users: {
-            [senderId]: true,
-            [receiverId]: true,
-        }
-    });
+    const chatQuery = query(chatsRef, where('users', '==', users), limit(1));
+
+    const chatSnapshot = await getDocs(chatQuery);
+
+    if(chatSnapshot.empty) {
+        return await addDoc(chatsRef, {
+            users: users
+        });
+    }
+
+    return chatSnapshot.docs[0];
 }
 
 export async function privateChatSaveMessage(senderId, receiverId, content) {
