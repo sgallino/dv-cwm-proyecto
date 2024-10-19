@@ -42,5 +42,14 @@ export default {
         <BaseHeading1>Perfil de {{ user.email }}</BaseHeading1>
 
         <ProfileInfo :user="user" />
+
+        <hr class="mb-4">
+
+        <router-link
+            :to="`/usuario/${user.id}/chat`"
+            class="text-blue-700 underline"
+        >
+            Conversación Privada con {{ user.email }}
+        </router-link>
     </template>
 </template>
