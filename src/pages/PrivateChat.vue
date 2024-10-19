@@ -2,6 +2,7 @@
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import BaseLoader from '../components/BaseLoader.vue';
 import { subscribeToAuth } from '../services/auth';
+import { privateChatSaveMessage } from '../services/private-chat';
 import { getUserProfileById } from '../services/user-profile';
 
 let unsubscribeFromAuth = () => {}
@@ -40,11 +41,23 @@ export default {
     },
     methods: {
         async handleSubmit() {
-            // TODO
+            this.loading = true;
+
+            try {
+                await privateChatSaveMessage(
+                    this.loggedUser.id,
+                    this.$route.params.id,
+                    this.newMessage.content,
+                );
+            } catch (error) {
+                // TODO
+            }
+
+            this.loading = false;
         }
     },
     mounted() {
-        unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser);
+        unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser = newUserData);
         this.loadingUser = true;
         getUserProfileById(this.$route.params.id)
             .then(profile => {
