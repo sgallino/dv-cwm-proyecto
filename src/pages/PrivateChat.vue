@@ -100,10 +100,15 @@ export default {
     <template v-else>
         <BaseHeading1>Chat Privado con {{ user.email }}</BaseHeading1>
 
-        <div class="min-h-[400px] p-4 mb-4 border rounded">
+        <div class="flex flex-col items-start min-h-[400px] p-4 mb-4 border rounded">
             <div 
                 v-for="message in messages"
-                class="mb-4"
+                class="p-4 mb-4 rounded"
+                :class="{
+                    'bg-gray-200': message.user_id !== loggedUser.id,
+                    'bg-green-200': message.user_id === loggedUser.id,
+                    'self-end': message.user_id === loggedUser.id,
+                }"
             >
                 <div>{{ message.content }}</div>
                 <div class="text-sm text-slate-700 italic">
