@@ -1,37 +1,34 @@
-<script>
+<script setup>
+import { onMounted, ref } from 'vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import BaseLoader from '../components/BaseLoader.vue';
 import ProfileInfo from '../components/profile/ProfileInfo.vue';
 import { getUserProfileById } from '../services/user-profile';
+import { useRoute } from 'vue-router';
 
-export default {
-    name: 'UserProfile',
-    components: { BaseHeading1, BaseLoader, ProfileInfo },
-    data() {
-        return {
-            user: {
-                id: null,
-                email: null,
-                displayName: null,
-                bio: null,
-                career: null,
-            },
-            loading: false,
-        }
-    },
-    async mounted() {
-        this.loading = true;
+const route = useRoute();
 
-        try {
-            this.user = await getUserProfileById(this.$route.params.id);
-        } catch (error) {
-            console.error('[UserProfile.vue mounted] Error al traer el perfil del usuario: ', error);
-            // TODO: Manejar el error..
-        }
+const user = ref({
+    id: null,
+    email: null,
+    displayName: null,
+    bio: null,
+    career: null,
+});
+const loading = ref(false);
 
-        this.loading = false;
+onMounted(async () => {
+    loading.value = true;
+
+    try {
+        user.value = await getUserProfileById(route.params.id);
+    } catch (error) {
+        console.error('[UserProfile.vue mounted] Error al traer el perfil del usuario: ', error);
+        // TODO: Manejar el error..
     }
-}
+
+    loading.value = false;
+});
 </script>
 
 <template>
