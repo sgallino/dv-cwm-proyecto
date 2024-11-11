@@ -20,7 +20,7 @@ async function getChatDocument(senderId, receiverId) {
     const cachedDoc = retrieveFromCache(cacheKey);
 
     if(cachedDoc) {
-        console.log("Obteniendo la conversación del caché.");
+        // console.log("Obteniendo la conversación del caché.");
         return cachedDoc
     }
 
@@ -45,7 +45,7 @@ async function getChatDocument(senderId, receiverId) {
         chatDoc = chatSnapshot.docs[0];
     }
 
-    console.log("Conversación obtenida de la base de datos.");
+    // console.log("Conversación obtenida de la base de datos.");
     putInCache(cacheKey, chatDoc);
 
     return chatDoc;

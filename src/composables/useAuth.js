@@ -1,9 +1,7 @@
-import { onMounted, onUnmounted, ref } from "vue";
+import { onUnmounted, ref } from "vue";
 import { subscribeToAuth } from "../services/auth";
 
 export function useAuth() {
-    let unsubscribeFromAuth = () => {}
-
     const loggedUser = ref({
         id: null,
         email: null,
@@ -13,9 +11,7 @@ export function useAuth() {
         career: null,
     });
 
-    onMounted(() => {
-        unsubscribeFromAuth = subscribeToAuth(newUserData => loggedUser.value = newUserData);
-    });
+    let unsubscribeFromAuth = subscribeToAuth(newUserData => loggedUser.value = newUserData);
 
     onUnmounted(() => unsubscribeFromAuth());
 
@@ -23,3 +19,4 @@ export function useAuth() {
         loggedUser,
     }
 }
+

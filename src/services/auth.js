@@ -122,7 +122,7 @@ export function logout() {
 export function subscribeToAuth(callback) {
     observers.push(callback);
 
-    console.log('Observer agregado. El stack actual es: ', observers);
+    // console.log('Observer agregado. El stack actual es: ', observers);
 
     notify(callback);
 
@@ -130,7 +130,7 @@ export function subscribeToAuth(callback) {
 }
 
 function notify(callback) {
-    console.log('Notificando a un observer...');
+    // console.log('Notificando a un observer...');
     callback({...loggedUser});
 }
 
