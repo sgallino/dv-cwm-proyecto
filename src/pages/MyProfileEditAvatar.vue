@@ -1,8 +1,6 @@
 <script>
-import { readonly } from 'vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import { editProfileAvatar } from '../services/auth';
-import { uploadFile } from '../services/storage';
 
 export default {
     name: 'MyProfileEditAvatar',

@@ -1,20 +1,16 @@
-<script>
-export default {
-    name: 'ChatMessageList',
-    props: {
-        messages: {
-            type: Array,
-            required: true,
-        }
-    },
-    methods: {
-        dateToString(date) {
-            return Intl.DateTimeFormat('es-AR', {
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit'
-            }).format(date).replace(',' ,'');
-        }
+<script setup>
+defineProps({
+    messages: {
+        type: Array,
+        required: true,
     }
+});
+
+function dateToString(date) {
+    return Intl.DateTimeFormat('es-AR', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+    }).format(date).replace(',' ,'');
 }
 </script>
 

@@ -1,13 +1,10 @@
-<script>
-export default {
-    name: 'ProfileInfo',
-    props: {
-        user: {
-            type: Object,
-            required: true,
-        }
-    }
+<script setup>
+defineProps({
+    user: {
+        type: Object,
+        required: true,
 }
+});
 </script>
 
 <template>
