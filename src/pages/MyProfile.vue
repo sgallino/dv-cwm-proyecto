@@ -1,30 +1,31 @@
-<script>
+<script setup>
+import { onMounted, onUnmounted, ref } from 'vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import ProfileInfo from '../components/profile/ProfileInfo.vue';
 import { subscribeToAuth } from '../services/auth';
 
-let unsubscribeFromAuth = () => {}
+const { loggedUser } = useAuth();
 
-export default {
-    name: 'MyProfile',
-    components: { BaseHeading1, ProfileInfo },
-    data() {
-        return {
-            loggedUser: {
-                id: null,
-                email: null,
-                displayName: null,
-                photoURL: null,
-                bio: null,
-                career: null,
-            }
-        }
-    },
-    mounted() {
-        unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser = newUserData);
-    },
-    unmounted() {
-        unsubscribeFromAuth();
+function useAuth() {
+    let unsubscribeFromAuth = () => {}
+
+    const loggedUser = ref({
+        id: null,
+        email: null,
+        displayName: null,
+        photoURL: null,
+        bio: null,
+        career: null,
+    });
+
+    onMounted(() => {
+        unsubscribeFromAuth = subscribeToAuth(newUserData => loggedUser.value = newUserData);
+    });
+
+    onUnmounted(() => unsubscribeFromAuth());
+
+    return {
+        loggedUser,
     }
 }
 </script>
