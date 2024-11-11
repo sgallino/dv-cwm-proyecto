@@ -41,9 +41,9 @@ async function getChatDocument(senderId, receiverId) {
         chatDoc = await addDoc(chatsRef, {
             users: users
         });
+    } else {
+        chatDoc = chatSnapshot.docs[0];
     }
-
-    chatDoc = chatSnapshot.docs[0];
 
     console.log("Conversación obtenida de la base de datos.");
     putInCache(cacheKey, chatDoc);
