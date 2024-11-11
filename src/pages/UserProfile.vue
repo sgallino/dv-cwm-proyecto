@@ -1,34 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import BaseLoader from '../components/BaseLoader.vue';
 import ProfileInfo from '../components/profile/ProfileInfo.vue';
-import { getUserProfileById } from '../services/user-profile';
 import { useRoute } from 'vue-router';
+import { useUserProfile } from '../composables/useUserProfile';
 
 const route = useRoute();
 
-const user = ref({
-    id: null,
-    email: null,
-    displayName: null,
-    bio: null,
-    career: null,
-});
-const loading = ref(false);
-
-onMounted(async () => {
-    loading.value = true;
-
-    try {
-        user.value = await getUserProfileById(route.params.id);
-    } catch (error) {
-        console.error('[UserProfile.vue mounted] Error al traer el perfil del usuario: ', error);
-        // TODO: Manejar el error..
-    }
-
-    loading.value = false;
-});
+const { user, loading } = useUserProfile(route.params.id);
 </script>
 
 <template>
