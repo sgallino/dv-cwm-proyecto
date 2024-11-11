@@ -1,35 +1,30 @@
-<script>
+<script setup>
+import { useRouter } from 'vue-router';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import { register } from '../services/auth';
+import { ref } from 'vue';
 
-export default {
-    name: 'Register',
-    components: { BaseHeading1 },
-    data() {
-        return {
-            loading: false,
-            user: {
-                email: '',
-                password: '',
-            },
-        }
-    },
-    methods: {
-        async handleSubmit() {
-            this.loading = true;
+const router = useRouter();
 
-            try {
-                await register({...this.user});
-                // console.log("Sesión iniciada con éxito.");
+const loading = ref(false);
+const user = ref({
+    email: '',
+    password: '',
+});
 
-                this.$router.push({ path: '/chat' });
-            } catch (error) {
-                // TODO: Mostrar un mensaje de feedback.
-                console.error('[Login.vue] Error al autenticar: ', error);
-            }
-            this.loading = false;
-        }
+async function handleSubmit() {
+    loading.value = true;
+
+    try {
+        await register({...user.value});
+        // console.log("Sesión iniciada con éxito.");
+
+        router.push({ path: '/chat' });
+    } catch (error) {
+        // TODO: Mostrar un mensaje de feedback.
+        console.error('[Login.vue] Error al autenticar: ', error);
     }
+    loading.value = false;
 }
 </script>
 
