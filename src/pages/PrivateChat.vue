@@ -1,96 +1,74 @@
-<script>
+<script setup>
+import { useRoute } from 'vue-router';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import BaseLoader from '../components/BaseLoader.vue';
-import { subscribeToAuth } from '../services/auth';
+import { useAuth } from '../composables/useAuth';
+import { useUserProfile } from '../composables/useUserProfile';
 import { privateChatSaveMessage, privateChatSubscribeToMessages } from '../services/private-chat';
-import { getUserProfileById } from '../services/user-profile';
+import { onMounted, ref } from 'vue';
 
-let unsubscribeFromAuth = () => {}
-let unsubscribeFromChat = () => {}
+const route = useRoute();
 
-export default {
-    name: 'PrivateChat',
-    components: { BaseHeading1, BaseLoader, },
-    data() {
-        return {
-            loggedUser: {
-                id: null,
-                email: null,
-                displayName: null,
-                photoURL: null,
-                bio: null,
-                career: null,
-            },
+const { loggedUser } = useAuth();
+const { user, loading: loadingUser } = useUserProfile(route.params.id);
 
-            user: {
-                id: null,
-                email: null,
-                displayName: null,
-                photoURL: null,
-                bio: null,
-                career: null,
-            },
-            loadingUser: false,
+const { loadingMessages, messages } = usePrivateChatMessages(loggedUser.value.id, route.params.id);
+const { newMessage, handleSubmit } = usePrivateChatForm(loggedUser.value.id, route.params.id);
 
-            messages: [],
-            loadingMessages: false,
+function usePrivateChatMessages(senderId, receiverId) {
+    let unsubscribeFromChat = () => {}
 
-            newMessage: {
-                content: '',
-            }
-        };
-    },
-    methods: {
-        async handleSubmit() {
-            this.loading = true;
+    const messages = ref([]);
+    const loadingMessages = ref(false);
 
-            try {
-                await privateChatSaveMessage(
-                    this.loggedUser.id,
-                    this.$route.params.id,
-                    this.newMessage.content,
-                );
-                this.newMessage.content = '';
-            } catch (error) {
-                // TODO
-            }
-
-            this.loading = false;
-        },
-        
-        dateToString(date) {
-            return Intl.DateTimeFormat('es-AR', {
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit'
-            }).format(date).replace(',' ,'');
-        },
-    },
-    mounted() {
-        unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser = newUserData);
-        this.loadingUser = true;
-        getUserProfileById(this.$route.params.id)
-            .then(profile => {
-                this.loadingUser = false;
-                this.user = profile;
-            })
-        
-        this.loadingMessages = true;
-        privateChatSubscribeToMessages(
-            this.loggedUser.id,
-            this.$route.params.id,
+    onMounted(async () => {
+        loadingMessages.value = true;
+        unsubscribeFromChat = await privateChatSubscribeToMessages(
+            senderId,
+            receiverId,
             newMessages => {
-                this.loadingMessages = false;
-                this.messages = newMessages;
+                loadingMessages.value = false;
+                messages.value = newMessages;
             }
-        ).then(unsubscribe => {
-            unsubscribeFromChat = unsubscribe;
-        })
-    },
-    unmounted() {
-        unsubscribeFromAuth();
-        unsubscribeFromChat();
+        );
+    });
+
+    return {
+        messages,
+        loadingMessages,
     }
 }
+
+function usePrivateChatForm(senderId, receiverId) {
+    const newMessage = ref({
+        content: '',
+    });
+
+    async function handleSubmit() {
+        try {
+            await privateChatSaveMessage(
+                senderId,
+                receiverId,
+                newMessage.value.content,
+            );
+            newMessage.value.content = '';
+        } catch (error) {
+            // TODO
+        }
+    }
+
+    return {
+        newMessage,
+        handleSubmit,
+    }
+}
+
+function dateToString(date) {
+    return Intl.DateTimeFormat('es-AR', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+    }).format(date).replace(',' ,'');
+};
 </script>
 
 <template>
