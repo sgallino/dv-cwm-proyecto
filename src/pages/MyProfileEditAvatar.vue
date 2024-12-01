@@ -1,10 +1,12 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
+import BaseLoader from '../components/BaseLoader.vue';
+import BaseButton from '../components/form/BaseButton.vue';
 import { editProfileAvatar } from '../services/auth';
 
 export default {
     name: 'MyProfileEditAvatar',
-    components: { BaseHeading1 },
+    components: { BaseHeading1, BaseButton, BaseLoader },
     data() {
         return {
             editData: {
@@ -66,12 +68,10 @@ export default {
                     @change="handleFileSelection"
                 >
             </div>
-            <button
-                type="submit"
-                class="py-2 px-4 rounded bg-blue-500 text-white"
-            >
-                {{ !editing ? 'Actualizar mi Foto' : 'Actualizando...' }}
-            </button>
+            <BaseButton>
+                <template v-if="!editing">Actualizar mi Foto</template>
+                <BaseLoader v-else />
+            </BaseButton>
         </form>
         <div class="w-1/2">
             <h2 class="mb-4">Previsualización:</h2>

@@ -1,12 +1,13 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
+import BaseButton from '../components/form/BaseButton.vue';
 import { editProfile, subscribeToAuth } from '../services/auth';
 
 let unsubscribeFromAuth = () => {}
 
 export default {
     name: 'MyProfileEdit',
-    components: { BaseHeading1 },
+    components: { BaseHeading1, BaseButton },
     data() {
         return {
             loggedUser: {
@@ -84,9 +85,6 @@ export default {
                 v-model="editData.career"
             >
         </div>
-        <button
-            type="submit"
-            class="py-2 px-4 rounded bg-blue-500 text-white"
-        >Enviar</button>
+        <BaseButton>Enviar</BaseButton>
     </form>
 </template>

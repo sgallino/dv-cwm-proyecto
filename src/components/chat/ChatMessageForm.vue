@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useAuth } from '../../composables/useAuth';
+import BaseButton from '../form/BaseButton.vue';
 
 const emit = defineEmits([{
     newMessage({ email, content }) {
@@ -52,9 +53,6 @@ function useChatForm({user, emit}) {
                 v-model="newMessage.content"
             ></textarea>
         </div>
-        <button
-            type="submit"
-            class="py-2 px-4 rounded bg-blue-500 text-white"
-        >Enviar</button>
+        <BaseButton>Enviar</BaseButton>
     </form>
 </template>

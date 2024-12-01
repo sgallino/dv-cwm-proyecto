@@ -6,6 +6,7 @@ import { useAuth } from '../composables/useAuth';
 import { useUserProfile } from '../composables/useUserProfile';
 import { privateChatSaveMessage, privateChatSubscribeToMessages } from '../services/private-chat';
 import { onMounted, ref } from 'vue';
+import BaseButton from '../components/form/BaseButton.vue';
 
 const route = useRoute();
 
@@ -111,10 +112,7 @@ function dateToString(date) {
                 class="w-full border rounded py-2 px-4"
                 v-model="newMessage.content"
             ></textarea>
-            <button
-                type="submit"
-                class="py-2 px-4 rounded bg-blue-500 text-white"
-            >Enviar</button>
+            <BaseButton>Enviar</BaseButton>
         </form>
     </template>
 </template>

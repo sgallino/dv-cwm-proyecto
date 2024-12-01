@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import { register } from '../services/auth';
 import { ref } from 'vue';
+import BaseButton from '../components/form/BaseButton.vue';
 
 const router = useRouter();
 
@@ -53,9 +54,6 @@ async function handleSubmit() {
                 v-model="user.password"
             >
         </div>
-        <button
-            type="submit"
-            class="py-2 px-4 rounded bg-blue-500 text-white"
-        >Crear mi Cuenta</button>
+        <BaseButton>Crear mi Cuenta</BaseButton>
     </form>
 </template>
