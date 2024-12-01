@@ -47,7 +47,6 @@ function useChatForm({user, emit}) {
         <div class="mb-4">
             <label for="text" class="block mb-2">Mensaje</label>
             <textarea
-                type="text"
                 id="text"
                 class="w-full border rounded py-2 px-4"
                 v-model="newMessage.content"
