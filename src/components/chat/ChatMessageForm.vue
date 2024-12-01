@@ -9,18 +9,26 @@ const emit = defineEmits([{
 }]);
 
 const { loggedUser } = useAuth();
+const { newMessage, handleSubmit } = useChatForm(loggedUser);
 
-const newMessage = ref({
-    content: '',
-});
-
-async function handleSubmit() {
-    emit('newMessage', {
-        user_id: loggedUser.value.id,
-        email: loggedUser.value.email,
-        content: newMessage.value.content,
+function useChatForm(user) {
+    const newMessage = ref({
+        content: '',
     });
-    newMessage.value.content = '';
+
+    async function handleSubmit() {
+        emit('newMessage', {
+            user_id: user.value.id,
+            email: user.value.email,
+            content: newMessage.value.content,
+        });
+        newMessage.value.content = '';
+    }
+
+    return {
+        newMessage,
+        handleSubmit,
+    }
 }
 </script>
 
