@@ -1,46 +1,26 @@
-<script>
-import { subscribeToAuth } from '../../services/auth';
+<script setup>
+import { ref } from 'vue';
+import { useAuth } from '../../composables/useAuth';
 
-let unsubscribeFromAuth = () => {};
-
-export default {
-    name: 'ChatMessageForm',
-    emits: {
-        newMessage({ email, content }) {
-            return typeof email == 'string' && typeof content == 'string';
-        }
-    },
-    data() {
-        return {
-            newMessage: {
-                content: '',
-            },
-            loggedUser: {
-                id: null,
-                email: null,
-                displayName: null,
-                bio: null,
-                career: null,
-            }
-        }
-    },
-
-    methods: {
-        handleSubmit() {
-            this.$emit('newMessage', {
-                user_id: this.loggedUser.id,
-                email: this.loggedUser.email,
-                content: this.newMessage.content,
-            });
-            this.newMessage.content = '';
-        }
-    },
-    mounted() {
-        unsubscribeFromAuth = subscribeToAuth(newUserData => this.loggedUser = newUserData);
-    },
-    unmounted() {
-        unsubscribeFromAuth();
+const emit = defineEmits([{
+    newMessage({ email, content }) {
+        return typeof email == 'string' && typeof content == 'string';
     }
+}]);
+
+const { loggedUser } = useAuth();
+
+const newMessage = ref({
+    content: '',
+});
+
+async function handleSubmit() {
+    emit('newMessage', {
+        user_id: loggedUser.value.id,
+        email: loggedUser.value.email,
+        content: newMessage.value.content,
+    });
+    newMessage.value.content = '';
 }
 </script>
 
