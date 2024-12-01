@@ -9,9 +9,12 @@ const emit = defineEmits([{
 }]);
 
 const { loggedUser } = useAuth();
-const { newMessage, handleSubmit } = useChatForm(loggedUser);
+const { newMessage, handleSubmit } = useChatForm({
+    user: loggedUser,
+    emit,
+});
 
-function useChatForm(user) {
+function useChatForm({user, emit}) {
     const newMessage = ref({
         content: '',
     });
