@@ -1,13 +1,13 @@
 <script>
 import BaseHeading1 from '../components/BaseHeading1.vue';
-import BaseButton from '../components/form/BaseButton.vue';
+import LoaderButton from '../components/form/LoaderButton.vue';
 import { editProfile, subscribeToAuth } from '../services/auth';
 
 let unsubscribeFromAuth = () => {}
 
 export default {
     name: 'MyProfileEdit',
-    components: { BaseHeading1, BaseButton },
+    components: { BaseHeading1, LoaderButton },
     data() {
         return {
             loggedUser: {
@@ -85,6 +85,6 @@ export default {
                 v-model="editData.career"
             >
         </div>
-        <BaseButton>Enviar</BaseButton>
+        <LoaderButton :loading="editing">Enviar</LoaderButton>
     </form>
 </template>

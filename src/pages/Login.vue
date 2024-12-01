@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { login } from '../services/auth';
 import BaseHeading1 from '../components/BaseHeading1.vue';
-import BaseButton from '../components/form/BaseButton.vue';
+import LoaderButton from '../components/form/LoaderButton.vue';
 
 const router = useRouter();
 
@@ -53,6 +53,6 @@ async function handleSubmit() {
                 v-model="user.password"
             >
         </div>
-        <BaseButton>Ingresar</BaseButton>
+        <LoaderButton :loading="loading">Ingresar</LoaderButton>
     </form>
 </template>
