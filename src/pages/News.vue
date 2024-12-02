@@ -6,6 +6,7 @@ import BaseLabel from '../components/form/BaseLabel.vue';
 import BaseTextarea from '../components/form/BaseTextarea.vue';
 import LoaderButton from '../components/form/LoaderButton.vue';
 import { useAuth } from '../composables/useAuth';
+import { createNews } from '../services/news';
 
 const { loggedUser } = useAuth();
 const { saving, newNews, handleSubmit } = useNewsForm(loggedUser);
@@ -21,7 +22,11 @@ function useNewsForm(user) {
         saving.value = true;
 
         try {
-            // ...
+            await createNews({
+                ...newNews.value,
+                user_id: user.value.id,
+                email: user.value.email,
+            });
         } catch (error) {
             // TODO...
         }
