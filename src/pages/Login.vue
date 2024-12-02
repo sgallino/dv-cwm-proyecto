@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { login } from '../services/auth';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import LoaderButton from '../components/form/LoaderButton.vue';
+import BaseLabel from '../components/form/BaseLabel.vue';
 
 const router = useRouter();
 
@@ -36,7 +37,7 @@ async function handleSubmit() {
         @submit.prevent="handleSubmit"
     >
         <div class="mb-4">
-            <label for="email" class="block mb-2">Email</label>
+            <BaseLabel for="email">Email</BaseLabel>
             <input
                 type="text"
                 id="email"
@@ -45,7 +46,7 @@ async function handleSubmit() {
             >
         </div>
         <div class="mb-4">
-            <label for="password" class="block mb-2">Contraseña</label>
+            <BaseLabel for="password">Contraseña</BaseLabel>
             <input
                 type="password"
                 id="password"
