@@ -39,6 +39,14 @@ export default {
             <template v-if="loggedUser.id !== null">
                 <li>
                     <router-link
+                        to="/noticias" 
+                        class="block p-3 no-underline text-gray-600"
+                    >
+                        Noticias
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
                         to="/chat" 
                         class="block p-3 no-underline text-gray-600"
                     >

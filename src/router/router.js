@@ -9,6 +9,7 @@ import MyProfileEdit from "../pages/MyProfileEdit.vue";
 import MyProfileEditAvatar from "../pages/MyProfileEditAvatar.vue";
 import UserProfile from "../pages/UserProfile.vue";
 import PrivateChat from "../pages/PrivateChat.vue";
+import News from "../pages/News.vue";
 
 const routes = [
     { path: '/',                        component: Home },
@@ -20,6 +21,7 @@ const routes = [
     { path: '/mi-perfil/editar/foto',   component: MyProfileEditAvatar,     meta: { requiresAuth: true } },
     { path: '/usuario/:id',             component: UserProfile,             meta: { requiresAuth: true } },
     { path: '/usuario/:id/chat',        component: PrivateChat,             meta: { requiresAuth: true } },
+    { path: '/noticias',                component: News,                    meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({
