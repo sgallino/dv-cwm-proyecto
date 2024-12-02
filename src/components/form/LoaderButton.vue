@@ -13,6 +13,6 @@ defineProps({
 <template>
     <BaseButton>
         <slot v-if="!loading" />
-        <BaseLoader v-else />
+        <BaseLoader v-else color="#fff" />
     </BaseButton>
 </template>
