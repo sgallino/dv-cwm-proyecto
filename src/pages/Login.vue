@@ -5,6 +5,7 @@ import { login } from '../services/auth';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import LoaderButton from '../components/form/LoaderButton.vue';
 import BaseLabel from '../components/form/BaseLabel.vue';
+import BaseInput from '../components/form/BaseInput.vue';
 
 const router = useRouter();
 
@@ -38,12 +39,11 @@ async function handleSubmit() {
     >
         <div class="mb-4">
             <BaseLabel for="email">Email</BaseLabel>
-            <input
-                type="text"
+            <BaseInput
+                type="email"
                 id="email"
-                class="w-full border rounded py-2 px-4"
                 v-model="user.email"
-            >
+            />
         </div>
         <div class="mb-4">
             <BaseLabel for="password">Contraseña</BaseLabel>
