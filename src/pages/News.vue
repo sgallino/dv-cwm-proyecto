@@ -11,19 +11,21 @@ import BaseLoader from '../components/BaseLoader.vue';
 
 const { loggedUser } = useAuth();
 const { saving, newNews, handleSubmit } = useNewsForm(loggedUser);
-const { loading, news, intersectionElement } = useNews();
+const { loading, loadingMore, news, intersectionElement } = useNews();
 
 function useNews() {
     const loading = ref(true);
     const news = ref([]);
     const intersectionElement = ref(null);
     const loadingMore = ref(false);
+    const docsPerPage = 4;
+    let areThereMoreToLoad = true;
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(async entry => {
             if(entry.isIntersecting) {
-                // Si ya estamos cargando más, no hacemos nada.
-                if(loadingMore.value) return;
+                // Si ya estamos cargando más, o no hay más noticias, no hacemos nada.
+                if(loadingMore.value || !areThereMoreToLoad) return;
 
                 loadingMore.value = true;
 
@@ -32,7 +34,12 @@ function useNews() {
                     news.value = [
                         ...news.value,
                         ...moreNews,
-                    ]
+                    ];
+
+                    // Verificamos si terminamos con las noticias.
+                    if(moreNews.length < docsPerPage) {
+                        areThereMoreToLoad = false;
+                    }
                 } catch (error) {
                     // TODO...
                     console.error('[News.vue useNews] Error al traer más noticias: ', error);
@@ -51,6 +58,7 @@ function useNews() {
 
     return {
         loading,
+        loadingMore,
         news,
         intersectionElement,
     }
