@@ -17,9 +17,30 @@ function useNews() {
     const loading = ref(true);
     const news = ref([]);
     const intersectionElement = ref(null);
+    const loadingMore = ref(false);
 
     const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => console.log("Intersección ocurrida: ", entry));
+        entries.forEach(async entry => {
+            if(entry.isIntersecting) {
+                // Si ya estamos cargando más, no hacemos nada.
+                if(loadingMore.value) return;
+
+                loadingMore.value = true;
+
+                try {
+                    const moreNews = await getNews();
+                    news.value = [
+                        ...news.value,
+                        ...moreNews,
+                    ]
+                } catch (error) {
+                    // TODO...
+                    console.error('[News.vue useNews] Error al traer más noticias: ', error);
+                }
+                
+                loadingMore.value = false;
+            }
+        });
     });
 
     onMounted(async () => {
@@ -106,5 +127,7 @@ function useNewsForm(user) {
         </li>
     </ul>
     <BaseLoader v-else />
+    
     <div id="intersection-detector" ref="intersectionElement"></div>
+    <BaseLoader v-if="loadingMore" />
 </template>
