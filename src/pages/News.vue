@@ -19,13 +19,12 @@ function useNews() {
     const intersectionElement = ref(null);
     const loadingMore = ref(false);
     const docsPerPage = 4;
-    let areThereMoreToLoad = true;
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(async entry => {
             if(entry.isIntersecting) {
-                // Si ya estamos cargando más, o no hay más noticias, no hacemos nada.
-                if(loadingMore.value || !areThereMoreToLoad) return;
+                // Si ya estamos cargando más, no hacemos nada.
+                if(loadingMore.value) return;
 
                 loadingMore.value = true;
 
@@ -38,7 +37,7 @@ function useNews() {
 
                     // Verificamos si terminamos con las noticias.
                     if(moreNews.length < docsPerPage) {
-                        areThereMoreToLoad = false;
+                        observer.unobserve(intersectionElement.value);
                     }
                 } catch (error) {
                     // TODO...
