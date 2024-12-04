@@ -11,11 +11,12 @@ import BaseLoader from '../components/BaseLoader.vue';
 
 const { loggedUser } = useAuth();
 const { saving, newNews, handleSubmit } = useNewsForm(loggedUser);
-const { loading, news } = useNews();
+const { loading, news, intersectionElement } = useNews();
 
 function useNews() {
     const loading = ref(true);
     const news = ref([]);
+    const intersectionElement = ref(null);
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => console.log("Intersección ocurrida: ", entry));
@@ -24,11 +25,13 @@ function useNews() {
     onMounted(async () => {
         news.value = await getNews();
         loading.value = false;
+        observer.observe(intersectionElement.value);
     });
 
     return {
         loading,
         news,
+        intersectionElement,
     }
 }
 
@@ -103,5 +106,5 @@ function useNewsForm(user) {
         </li>
     </ul>
     <BaseLoader v-else />
-    <div id="intersection-detector"></div>
+    <div id="intersection-detector" ref="intersectionElement"></div>
 </template>
