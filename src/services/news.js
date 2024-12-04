@@ -11,10 +11,10 @@ export async function createNews(data) {
     );
 }
 
-export async function getNews(startFromDate = null) {
+export async function getNews(perPage = 4, startFromDate = null) {
     const queryConstraints = [
         orderBy('created_at', 'desc'),
-        limit(4),
+        limit(perPage),
     ];
 
     if(startFromDate) queryConstraints.push(startAfter(startFromDate));

@@ -29,7 +29,7 @@ function useNews() {
                 loadingMore.value = true;
 
                 try {
-                    const moreNews = await getNews(news.value[news.value.length - 1].created_at);
+                    const moreNews = await getNews(docsPerPage, news.value[news.value.length - 1].created_at);
                     news.value = [
                         ...news.value,
                         ...moreNews,
