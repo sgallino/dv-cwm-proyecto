@@ -17,6 +17,10 @@ function useNews() {
     const loading = ref(true);
     const news = ref([]);
 
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => console.log("Intersección ocurrida: ", entry));
+    });
+
     onMounted(async () => {
         news.value = await getNews();
         loading.value = false;
@@ -99,4 +103,5 @@ function useNewsForm(user) {
         </li>
     </ul>
     <BaseLoader v-else />
+    <div id="intersection-detector"></div>
 </template>

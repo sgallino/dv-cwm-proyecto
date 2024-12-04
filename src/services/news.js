@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, getDocs, limit, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { db } from "./firebase";
 
 export async function createNews(data) {
@@ -15,6 +15,7 @@ export async function getNews() {
     const newsQuery = query(
         collection(db, 'news'),
         orderBy('created_at', 'desc'),
+        limit(4),
     );
 
     const newsDocs = await getDocs(newsQuery);
