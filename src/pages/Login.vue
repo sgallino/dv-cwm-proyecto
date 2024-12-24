@@ -8,25 +8,34 @@ import BaseLabel from '../components/form/BaseLabel.vue';
 import BaseInput from '../components/form/BaseInput.vue';
 
 const router = useRouter();
+const { user, loading, handleSubmit } = useLogin();
 
-const loading = ref(false);
-const user = ref({
-    email: '',
-    password: '',
-});
+function useLogin() {
+    const loading = ref(false);
+    const user = ref({
+        email: '',
+        password: '',
+    });
 
-async function handleSubmit() {
-    loading.value = true;
+    async function handleSubmit() {
+        loading.value = true;
 
-    try {
-        await login({...user.value});
+        try {
+            await login({...user.value});
 
-        router.push({ path: '/chat' });
-    } catch (error) {
-        // TODO: Mostrar un mensaje de feedback.
-        console.error('[Login.vue] Error al autenticar: ', error);
+            router.push({ path: '/chat' });
+        } catch (error) {
+            // TODO: Mostrar un mensaje de feedback.
+            console.error('[Login.vue] Error al autenticar: ', error);
+        }
+        loading.value = false;
     }
-    loading.value = false;
+
+    return {
+        user,
+        loading,
+        handleSubmit,
+    }
 }
 </script>
 
