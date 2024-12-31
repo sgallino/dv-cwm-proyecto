@@ -51,7 +51,10 @@ function useLogin() {
 <template>
     <BaseHeading1>Iniciar Sesión</BaseHeading1>
 
-    <NotificationBox :content="feedback" />
+    <NotificationBox 
+        v-if="feedback.message"
+        :content="feedback" 
+    />
 
     <form
         action="#"

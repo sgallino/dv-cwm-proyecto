@@ -9,7 +9,6 @@ defineProps({
 
 <template>
     <div
-        v-if="content.message"
         class="p-4 mb-4 rounded"
         :class="{
             'bg-red-100 text-red-900': content.type === 'error',
