@@ -6,6 +6,7 @@ import BaseHeading1 from '../components/BaseHeading1.vue';
 import LoaderButton from '../components/form/LoaderButton.vue';
 import BaseLabel from '../components/form/BaseLabel.vue';
 import BaseInput from '../components/form/BaseInput.vue';
+import NotificationBox from '../components/NotificationBox.vue';
 
 const router = useRouter();
 const { user, loading, feedback, handleSubmit } = useLogin();
@@ -50,16 +51,7 @@ function useLogin() {
 <template>
     <BaseHeading1>Iniciar Sesión</BaseHeading1>
 
-    <div
-        v-if="feedback.message"
-        class="p-4 mb-4 rounded"
-        :class="{
-            'bg-red-100 text-red-900': feedback.type === 'error',
-            'bg-green-100 text-green-900': feedback.type === 'success',
-        }"
-    >
-        {{ feedback.message }}
-    </div>
+    <NotificationBox :content="feedback" />
 
     <form
         action="#"
