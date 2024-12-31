@@ -3,6 +3,15 @@ import { auth } from "./firebase";
 import { createUserProfile, editUserProfile, getUserProfileById } from "./user-profile";
 import { getFileURL, uploadFile } from "./storage";
 
+const FIREBASE_ERROR_MESSAGES_MAP = {
+    'auth/email-already-in-use': 'El email ya está en uso.',
+    'auth/invalid-email': 'El email no tiene un formato correcto.',
+    'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
+    'auth/user-not-found': 'Usuario no encontrado.',
+    'auth/wrong-password': 'Contraseña incorrecta.',
+    'auth/invalid-credential': 'Las credenciales ingresadas no coinciden con nuestros registros.',
+}
+
 let loggedUser = {
     id: null,
     email: null,
@@ -55,7 +64,7 @@ export async function login({email, password}) {
         return true;
     } catch (error) {
         console.error("[auth.js] Error al autenticar: ", error);
-        throw error;
+        throw FIREBASE_ERROR_MESSAGES_MAP[error.code] || error.message;
     }
 }
 

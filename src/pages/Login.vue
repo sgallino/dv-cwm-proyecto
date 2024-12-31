@@ -8,13 +8,17 @@ import BaseLabel from '../components/form/BaseLabel.vue';
 import BaseInput from '../components/form/BaseInput.vue';
 
 const router = useRouter();
-const { user, loading, handleSubmit } = useLogin();
+const { user, loading, feedback, handleSubmit } = useLogin();
 
 function useLogin() {
     const loading = ref(false);
     const user = ref({
         email: '',
         password: '',
+    });
+    const feedback = ref({
+        message: null,
+        type: null,
     });
 
     async function handleSubmit() {
@@ -25,7 +29,10 @@ function useLogin() {
 
             router.push({ path: '/chat' });
         } catch (error) {
-            // TODO: Mostrar un mensaje de feedback.
+            feedback.value = {
+                message: error,
+                type: 'error',
+            };
             console.error('[Login.vue] Error al autenticar: ', error);
         }
         loading.value = false;
@@ -34,6 +41,7 @@ function useLogin() {
     return {
         user,
         loading,
+        feedback,
         handleSubmit,
     }
 }
@@ -41,6 +49,17 @@ function useLogin() {
 
 <template>
     <BaseHeading1>Iniciar Sesión</BaseHeading1>
+
+    <div
+        v-if="feedback.message"
+        class="p-4 mb-4 rounded"
+        :class="{
+            'bg-red-100 text-red-900': feedback.type === 'error',
+            'bg-green-100 text-green-900': feedback.type === 'success',
+        }"
+    >
+        {{ feedback.message }}
+    </div>
 
     <form
         action="#"
