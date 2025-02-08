@@ -1,7 +1,7 @@
 <script setup>
 import AppNavbar from './components/AppNavbar.vue';
 import AppFooter from './components/AppFooter.vue';
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
 import NotificationBox from './components/NotificationBox.vue';
 
 const feedback = ref({
@@ -12,6 +12,8 @@ const feedback = ref({
 function setFeedback(content) {
     feedback.value = content;
 }
+
+provide('globalFeedback', {setFeedback});
 </script>
 
 <template>
@@ -22,9 +24,7 @@ function setFeedback(content) {
             :content="feedback" 
         />
 
-        <router-view
-            @updateFeedback="setFeedback"
-        />
+        <router-view />
     </main>
     <AppFooter />
 </template>

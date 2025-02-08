@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import { login } from '../services/auth';
 import BaseHeading1 from '../components/BaseHeading1.vue';
@@ -11,7 +11,7 @@ import NotificationBox from '../components/NotificationBox.vue';
 const router = useRouter();
 const { user, loading, feedback, handleSubmit } = useLogin();
 
-const emit = defineEmits(['updateFeedback']);
+const { setFeedback: setGlobalFeedback } = inject('globalFeedback');
 
 function useLogin() {
     const loading = ref(false);
@@ -30,7 +30,7 @@ function useLogin() {
         try {
             await login({...user.value});
 
-            emit('updateFeedback', {
+            setGlobalFeedback({
                 message: 'Sesión iniciada con éxito. ¡Hola de nuevo!',
                 type: 'success',
             });
