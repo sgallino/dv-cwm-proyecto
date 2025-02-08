@@ -11,6 +11,8 @@ import NotificationBox from '../components/NotificationBox.vue';
 const router = useRouter();
 const { user, loading, feedback, handleSubmit } = useLogin();
 
+const emit = defineEmits(['updateFeedback']);
+
 function useLogin() {
     const loading = ref(false);
     const user = ref({
@@ -28,10 +30,10 @@ function useLogin() {
         try {
             await login({...user.value});
 
-            feedback.value = {
+            emit('updateFeedback', {
                 message: 'Sesión iniciada con éxito. ¡Hola de nuevo!',
                 type: 'success',
-            };
+            });
 
             router.push({ path: '/chat' });
         } catch (error) {
