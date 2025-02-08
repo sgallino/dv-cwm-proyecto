@@ -28,6 +28,11 @@ function useLogin() {
         try {
             await login({...user.value});
 
+            feedback.value = {
+                message: 'Sesión iniciada con éxito. ¡Hola de nuevo!',
+                type: 'success',
+            };
+
             router.push({ path: '/chat' });
         } catch (error) {
             feedback.value = {
