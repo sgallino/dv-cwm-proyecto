@@ -8,10 +8,14 @@ import { globalFeedbackKey } from './symbols/inject';
 const feedback = ref({
     message: null,
     type: null,
+    closable: true,
 });
 
 function setFeedback(content) {
-    feedback.value = content;
+    feedback.value = {
+        closable: true,
+        ...content
+    };
 }
 
 provide(globalFeedbackKey, {setFeedback});
@@ -23,6 +27,7 @@ provide(globalFeedbackKey, {setFeedback});
         <NotificationBox 
             v-if="feedback.message"
             :content="feedback" 
+            @close="feedback.message = null"
         />
 
         <router-view />
