@@ -2,6 +2,7 @@
 import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import { login } from '../services/auth';
+import { globalFeedbackKey } from '../symbols/inject';
 import BaseHeading1 from '../components/BaseHeading1.vue';
 import LoaderButton from '../components/form/LoaderButton.vue';
 import BaseLabel from '../components/form/BaseLabel.vue';
@@ -11,7 +12,7 @@ import NotificationBox from '../components/NotificationBox.vue';
 const router = useRouter();
 const { user, loading, feedback, handleSubmit } = useLogin();
 
-const { setFeedback: setGlobalFeedback } = inject('globalFeedback');
+const { setFeedback: setGlobalFeedback } = inject(globalFeedbackKey);
 
 function useLogin() {
     const loading = ref(false);

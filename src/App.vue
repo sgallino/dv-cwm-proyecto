@@ -1,8 +1,9 @@
 <script setup>
+import { ref, provide } from 'vue';
 import AppNavbar from './components/AppNavbar.vue';
 import AppFooter from './components/AppFooter.vue';
-import { ref, provide } from 'vue';
 import NotificationBox from './components/NotificationBox.vue';
+import { globalFeedbackKey } from './symbols/inject';
 
 const feedback = ref({
     message: null,
@@ -13,7 +14,7 @@ function setFeedback(content) {
     feedback.value = content;
 }
 
-provide('globalFeedback', {setFeedback});
+provide(globalFeedbackKey, {setFeedback});
 </script>
 
 <template>
