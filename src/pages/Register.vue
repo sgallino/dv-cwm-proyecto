@@ -4,33 +4,57 @@ import BaseHeading1 from '../components/BaseHeading1.vue';
 import { register } from '../services/auth';
 import { ref } from 'vue';
 import LoaderButton from '../components/form/LoaderButton.vue';
+import NotificationBox from '../components/NotificationBox.vue';
 
 const router = useRouter();
 
-const loading = ref(false);
-const user = ref({
-    email: '',
-    password: '',
-});
+const { user, loading, feedback, handleSubmit } = useRegister();
 
-async function handleSubmit() {
-    loading.value = true;
+function useRegister() {
+    const loading = ref(false);
+    const user = ref({
+        email: '',
+        password: '',
+    });
+    const feedback = ref({
+        message: null,
+        type: null,
+    });
 
-    try {
-        await register({...user.value});
-        // console.log("Sesión iniciada con éxito.");
+    async function handleSubmit() {
+        loading.value = true;
 
-        router.push({ path: '/chat' });
-    } catch (error) {
-        // TODO: Mostrar un mensaje de feedback.
-        console.error('[Login.vue] Error al autenticar: ', error);
+        try {
+            await register({...user.value});
+            // console.log("Sesión iniciada con éxito.");
+
+            router.push({ path: '/chat' });
+        } catch (error) {
+            feedback.value = {
+                message: error,
+                type: 'error',
+            };
+            console.error('[Login.vue] Error al autenticar: ', error);
+        }
+        loading.value = false;
     }
-    loading.value = false;
+
+    return {
+        user,
+        loading,
+        feedback,
+        handleSubmit,
+    }
 }
 </script>
 
 <template>
     <BaseHeading1>Crear una Cuenta</BaseHeading1>
+
+    <NotificationBox 
+        v-if="feedback.message"
+        :content="feedback"
+    />
 
     <form
         action="#"
